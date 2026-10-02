@@ -20,6 +20,16 @@ Signal-generation research sources, offline I/Q conversion and platform-specific
 
 I/Q stores the two components of a complex signal. RF-PWM represents a radio waveform as pulse timings. Existing filenames, commands, binary layouts, rates and platform options retain their established meanings.
 
+## Offline conversion
+
+With NumPy, SciPy and Click installed, run:
+
+```sh
+python3 offline-noise-sdr/generate/rf-pwm.py generate --input-file samples.iq --output-file timings.txt
+```
+
+Input is a file of at least four finite `complex64` samples. Amplitudes must be at most one, or use `--normalize` for a varying-amplitude input. Sampling rates must be positive with `--fs-out` at least `--fs-in`; the converter retains the existing integer resampling-ratio behavior. Input and output must be different files. Invalid inputs and failed publication preserve an existing output. Add `--plot` only when Matplotlib is installed. Conversion writes timing data and does not transmit a signal.
+
 ## Build environment
 
 The Makefiles select architecture with `ARCH` and operation with `OP`. Their existing defaults and target names are unchanged. The sources target Linux/Windows x86, Android ARM and OpenWrt MIPS toolchains; this macOS checkout does not provide a matching cross-compilation environment.

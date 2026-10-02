@@ -2,7 +2,7 @@
 
 ## Change boundary
 
-The repository presentation, documentation entry points and source comments were updated. Existing executable entry points, algorithms, defaults, filenames, formats and numerical operations remain unchanged. The combined source retains its GPL terms and separate bundled-component notices. New presentation and documentation are MIT.
+The repository presentation, documentation entry points and source comments were updated. At initial publication, executable entry points, algorithms, defaults, filenames, formats and numerical operations were preserved. The later offline converter repair below changes invalid-input and output-publication behavior. The combined source retains its GPL terms and separate bundled-component notices. New presentation and documentation are MIT.
 
 ## Verified locally
 
@@ -13,3 +13,11 @@ The source comparison checks Python syntax trees without comments or source loca
 ## Execution boundary
 
 No RF transmission, signal acquisition, connected-device commands, firmware changes or live-target experiments were performed. No external experimental datasets were downloaded. Build and reproduction requirements remain those documented by the source; absent dependencies have not been silently replaced with new algorithms.
+
+## Offline converter repair (October 2, 2026)
+
+`offline-noise-sdr/generate/rf-pwm.py` now rejects incomplete/nonfinite complex64 input, fewer than four samples, nonfinite frequencies, invalid sampling rates, amplitudes outside the arcsine domain, undefined constant-amplitude normalization, and cubic interpolation overshoot outside the pulse-width domain (apart from floating-point roundoff). Input/output aliases, including hard links and symlinks, are rejected. A carrier that stays negative returns an empty timing file; zero-valued carrier samples are treated as high so the pulse loop always advances. Existing finite positive/negative carrier calculations and the text timing format are preserved.
+
+Timing output is written to a temporary file beside the destination, flushed and synced before replacement. Validation and failed publication leave an existing output intact. This is file-publication protection, not a power-loss guarantee for every filesystem. Plotting dependencies load only when `--plot` is requested.
+
+Run the converter checks with `python3 -m unittest discover -s tests -v` in an environment with NumPy, SciPy and Click. They execute the actual offline CLI with synthetic input, check failure preservation and input aliases, and inject sync/replacement failures. No transmitter, acquisition or hardware path is imported or executed. Six prior valid conversion fixtures remain byte-identical to the pre-repair converter; this does not validate every modulation or platform build.
