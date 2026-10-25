@@ -169,7 +169,10 @@ void lora::add_crc() {
       crc = crc16(crc, payload[i]);
 
     // XOR the obtained CRC with the last 2 data bytes
-    crc = crc ^ payload[payload_cnt - 1] ^ (payload[payload_cnt - 2] << 8);
+    if (payload_cnt > 0)
+      crc ^= payload[payload_cnt - 1];
+    if (payload_cnt > 1)
+      crc ^= payload[payload_cnt - 2] << 8;
 
     data[len] = ((crc & 0x000F));
     data[len + 1] = ((crc & 0x00F0) >> 4);
