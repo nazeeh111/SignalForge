@@ -21,3 +21,11 @@ jobs:
           python -m pip install --only-binary=:all: numpy==2.3.5 scipy==1.18.1 click==8.1.7
       - name: Test stored-signal conversion and output preservation
         run: python -m unittest discover -s tests -v
+      - name: Test retained libsamplerate ratio validation
+        run: |
+          src=fldigi-noise-sdr/src/fldigi/libsamplerate
+          cc -std=c99 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer \
+            -I "$src" "$src/samplerate.c" "$src/src_linear.c" \
+            "$src/src_zoh.c" "$src/src_sinc.c" tests/libsamplerate_ratio_test.c \
+            -lm -o "$RUNNER_TEMP/libsamplerate-ratio-test"
+          "$RUNNER_TEMP/libsamplerate-ratio-test"
