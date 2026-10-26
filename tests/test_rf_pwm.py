@@ -67,6 +67,11 @@ class ConverterTests(unittest.TestCase):
             with self.subTest(option=option, value=value):
                 self.assert_rejected(option, value)
 
+    def test_fractional_resampling_cannot_publish_shortened_timings(self):
+        for rate in ("96000", "160000"):
+            with self.subTest(rate=rate):
+                self.assert_rejected("--fs-out", rate)
+
     def test_truncated_and_short_input_are_rejected(self):
         for data in [b"", b"x", np.ones(3, np.complex64).tobytes(),
                      self.samples.tobytes() + b"x"]:
