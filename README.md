@@ -42,7 +42,7 @@ With NumPy, SciPy and Click installed, run:
 python3 offline-noise-sdr/generate/rf-pwm.py generate --input-file samples.iq --output-file timings.txt
 ```
 
-Input is a file of at least four finite `complex64` samples. Amplitudes must be at most one, or use `--normalize` for a varying-amplitude input. Sampling rates must be positive with `--fs-out` at least `--fs-in`; the converter retains the existing integer resampling-ratio behavior. Input and output must be different files. Invalid inputs and failed publication preserve an existing output. Add `--plot` only when Matplotlib is installed. Conversion writes timing data and does not transmit a signal.
+Input is a file of at least four finite `complex64` samples. Amplitudes must be at most one, or use `--normalize` for a varying-amplitude input. Sampling rates must be positive, and `--fs-out` must be an integer multiple of `--fs-in`. Fractional ratios are rejected because the retained resampler would otherwise shorten the generated timings. Input and output must be different files. Invalid inputs and failed publication preserve an existing output. Add `--plot` only when Matplotlib is installed. Conversion writes timing data and does not transmit a signal.
 
 ## Source map
 

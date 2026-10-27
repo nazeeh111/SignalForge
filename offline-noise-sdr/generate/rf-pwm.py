@@ -43,6 +43,8 @@ def generate(input_file, output_file, fs_in, fs_out, f_if, plot, normalize):
         raise click.ClickException("Sampling and intermediate frequencies must be finite.")
     if fs_in <= 0 or fs_out < fs_in or not np.isfinite(fs_out / fs_in):
         raise click.ClickException("Sampling rates must be positive, with fs-out at least fs-in.")
+    if fs_out / fs_in != int(fs_out / fs_in):
+        raise click.ClickException("fs-out must be an integer multiple of fs-in.")
     source = Path(input_file)
     destination = Path(output_file)
     try:
