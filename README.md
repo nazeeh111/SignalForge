@@ -64,7 +64,7 @@ The Makefiles select architecture with `ARCH` and operation with `OP`. Their exi
 
 Use the existing [offline Makefile](offline-noise-sdr/transmit/Makefile), [modem Makefile](fldigi-noise-sdr/Makefile) and [environment provisioning reference](vagrant/bootstrap.sh) to inspect requirements. Provisioning scripts are not part of the publication checks.
 
-[Preservation and verification](COMPATIBILITY.md) documents offline source checks. No RF transmission, acquisition or connected-device activity was performed. Bundled component terms remain in [third-party notices](THIRD_PARTY_NOTICES.md).
+[Preservation and verification](COMPATIBILITY.md) documents offline source checks. No RF transmission, acquisition or connected-device activity was performed. Bundled component terms remain in their source files and [license scope](COPYRIGHT).
 
 ## Source terms
 
